@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Show Cat</string>
+    <string name="Retry">повторить</string>
+    <string name="not_be_loader">Результаты не могут быть загружены</string>
+    <string name="no_results">Результаты по этому запросу не найдены</string>
+    <string name="image_cat">изображение кота</string>
+    <string name="save_cat">сохранить котика</string>
+</resources>
