@@ -7,16 +7,19 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
+import androidx.paging.map
 import com.example.showcat.R
-import com.example.showcat.data.api.model.CatApi
 import com.example.showcat.databinding.FragmentGalleryBinding
+import com.example.showcat.ui.mapper.EntityToUI
+import com.example.showcat.ui.model.CatUI
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class GalleryFragment: Fragment(R.layout.fragment_gallery){
+class GalleryFragment : Fragment(R.layout.fragment_gallery) {
 
     private val viewModel by viewModels<GalleryViewModel>()
 
+    private lateinit var adapter: CatPhotoAdapter
     private var _binding: FragmentGalleryBinding? = null
     private val binding get() = _binding!!
 
@@ -24,23 +27,39 @@ class GalleryFragment: Fragment(R.layout.fragment_gallery){
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentGalleryBinding.bind(view)
 
-        val adapter = CatPhotoAdapter{ photo ->
-            onItemClick(photo)
-        }
+        populateRecyclerView()
+        setListeners()
+        observerLiveData()
+        loadStateListener()
+    }
 
+    private fun populateRecyclerView() {
         binding.apply {
+            adapter = CatPhotoAdapter { photo ->
+                onItemClick(photo)
+            }
             recyclerView.setHasFixedSize(true)
             recyclerView.adapter = adapter
+        }
+    }
 
+    private fun setListeners() {
+        binding.apply {
             buttonRetry.setOnClickListener {
                 adapter.retry()
             }
         }
+    }
 
+    private fun observerLiveData() {
         viewModel.photos.observe(viewLifecycleOwner) {
-            adapter.submitData(viewLifecycleOwner.lifecycle, it)
+            adapter.submitData(viewLifecycleOwner.lifecycle, it.map { catEntity ->
+                EntityToUI.map(catEntity)
+            })
         }
+    }
 
+    private fun loadStateListener() {
         adapter.addLoadStateListener { loadState ->
             binding.apply {
                 progressBar.isVisible = loadState.source.refresh is LoadState.Loading
@@ -49,12 +68,9 @@ class GalleryFragment: Fragment(R.layout.fragment_gallery){
                 textViewError.isVisible = loadState.source.refresh is LoadState.Error
             }
         }
-
-        setHasOptionsMenu(true)
-
     }
 
-    private fun onItemClick(photo: CatApi) {
+    private fun onItemClick(photo: CatUI) {
         val action = GalleryFragmentDirections.actionGalleryFragmentToDetailsFragment(photo)
         findNavController().navigate(action)
     }

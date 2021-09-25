@@ -20,8 +20,9 @@
         android:id="@+id/detailsFragment"
         android:name="com.example.showcat.ui.secondscreen.DetailsFragment"
         android:label="DetailsFragment" >
+
         <argument
             android:name="photo"
-            app:argType="com.example.showcat.data.api.model.CatApi" />
+            app:argType="com.example.showcat.ui.model.CatUI" />
     </fragment>
 </navigation>

@@ -1,10 +1,11 @@
-package com.example.showcat.data.api.model
+package com.example.showcat.ui.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
+
 @Parcelize
-data class CatApi(
+data class CatUI(
     val id: String,
     val url: String
 ): Parcelable

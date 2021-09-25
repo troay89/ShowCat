@@ -3,8 +3,9 @@ package com.example.showcat.data.repository
 import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.example.showcat.data.api.model.CatApi
 import com.example.showcat.data.api.retrofit.CatApiService
+import com.example.showcat.data.repository.mapper.ApiToEntityMapper
+import com.example.showcat.domain.model.CatEntity
 import retrofit2.HttpException
 import java.io.IOException
 
@@ -12,17 +13,17 @@ private const val CAT_STARTING_PAGE_INDEX = 1
 
 class CatPagingSource(
     private val catApiService: CatApiService,
-): PagingSource<Int, CatApi>() {
+): PagingSource<Int, CatEntity>() {
 
-    override fun getRefreshKey(state: PagingState<Int, CatApi>): Int? {
+    override fun getRefreshKey(state: PagingState<Int, CatEntity>): Int? {
         TODO("Not yet implemented")
     }
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, CatApi> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, CatEntity> {
         val position = params.key?: CAT_STARTING_PAGE_INDEX
 
         return try {
-            val photos: List<CatApi> = catApiService.searchPhoto(params.loadSize, position)
+            val photos: List<CatEntity> = ApiToEntityMapper.map(catApiService.getPhoto(params.loadSize, position))
             Log.d("load111", photos.size.toString())
             LoadResult.Page(
                 data = photos,

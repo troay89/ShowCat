@@ -24,8 +24,8 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.example.showcat.R
-import com.example.showcat.data.api.model.CatApi
 import com.example.showcat.databinding.FragmentDetailsBinding
+import com.example.showcat.ui.model.CatUI
 import java.io.File
 import java.io.FileOutputStream
 import java.util.*
@@ -43,7 +43,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
         saveDetailedPhotos(binding, photo)
     }
 
-    private fun saveDetailedPhotos(binding: FragmentDetailsBinding, photo: CatApi) {
+    private fun saveDetailedPhotos(binding: FragmentDetailsBinding, photo: CatUI) {
         binding.apply {
 
 
@@ -65,7 +65,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
         }
     }
 
-    private fun displayDetailedPhotos(binding: FragmentDetailsBinding, photo: CatApi) {
+    private fun displayDetailedPhotos(binding: FragmentDetailsBinding, photo: CatUI) {
 
         binding.apply {
             Glide.with(this@DetailsFragment)
@@ -98,7 +98,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
         }
     }
 
-    private fun saveImageToGallery(bitmap: Bitmap, photo: CatApi) {
+    private fun saveImageToGallery(bitmap: Bitmap, photo: CatUI) {
         try {
             val fos = if (Build.VERSION.SDK_INT > Build.VERSION_CODES.Q) {
                 val resolver: ContentResolver? = activity?.contentResolver

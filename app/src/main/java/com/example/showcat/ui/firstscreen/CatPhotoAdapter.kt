@@ -8,10 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.showcat.R
-import com.example.showcat.data.api.model.CatApi
 import com.example.showcat.databinding.ItemUnsplashPhotoBinding
+import com.example.showcat.ui.model.CatUI
 
-class CatPhotoAdapter(private val onClick: (CatApi) -> Unit): PagingDataAdapter<CatApi, CatPhotoAdapter.PhotoViewHolder>(PHOTO_COMPARATOR) {
+class CatPhotoAdapter(private val onClick: (CatUI) -> Unit): PagingDataAdapter<CatUI, CatPhotoAdapter.PhotoViewHolder>(PHOTO_COMPARATOR) {
 
 
     override fun onBindViewHolder(holder: PhotoViewHolder, position: Int) {
@@ -27,7 +27,7 @@ class CatPhotoAdapter(private val onClick: (CatApi) -> Unit): PagingDataAdapter<
         return PhotoViewHolder(binding, onClick)
     }
 
-    inner class PhotoViewHolder(private val binding: ItemUnsplashPhotoBinding, onClick: (CatApi) -> Unit) :
+    inner class PhotoViewHolder(private val binding: ItemUnsplashPhotoBinding, onClick: (CatUI) -> Unit) :
         RecyclerView.ViewHolder(binding.root) {
 
         init {
@@ -42,10 +42,10 @@ class CatPhotoAdapter(private val onClick: (CatApi) -> Unit): PagingDataAdapter<
             }
         }
 
-        fun bind(catApi: CatApi){
+        fun bind(catUI: CatUI){
             binding.apply {
                 Glide.with(itemView)
-                    .load(catApi.url)
+                    .load(catUI.url)
                     .centerCrop()
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .error(R.drawable.ic_baseline_person_24)
@@ -55,12 +55,12 @@ class CatPhotoAdapter(private val onClick: (CatApi) -> Unit): PagingDataAdapter<
     }
 
     companion object {
-        private val PHOTO_COMPARATOR = object : DiffUtil.ItemCallback<CatApi>() {
-            override fun areItemsTheSame(oldItem: CatApi, newItem: CatApi) =
+        private val PHOTO_COMPARATOR = object : DiffUtil.ItemCallback<CatUI>() {
+            override fun areItemsTheSame(oldItem: CatUI, newItem: CatUI) =
                 oldItem.id == newItem.id
 
 
-            override fun areContentsTheSame(oldItem: CatApi, newItem: CatApi) =
+            override fun areContentsTheSame(oldItem: CatUI, newItem: CatUI) =
                 oldItem == newItem
         }
     }
