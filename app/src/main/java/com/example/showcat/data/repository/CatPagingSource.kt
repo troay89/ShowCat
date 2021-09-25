@@ -14,7 +14,6 @@ private const val CAT_STARTING_PAGE_INDEX = 1
 class CatPagingSource(
     private val catApiService: CatApiService,
 ): PagingSource<Int, CatEntity>() {
-
     override fun getRefreshKey(state: PagingState<Int, CatEntity>): Int? {
         TODO("Not yet implemented")
     }

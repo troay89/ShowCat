@@ -19,7 +19,7 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
 
     private val viewModel by viewModels<GalleryViewModel>()
 
-    private lateinit var adapter: CatPhotoAdapter
+    private lateinit var adapter: CatAdapter
     private var _binding: FragmentGalleryBinding? = null
     private val binding get() = _binding!!
 
@@ -35,7 +35,7 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
 
     private fun populateRecyclerView() {
         binding.apply {
-            adapter = CatPhotoAdapter { photo ->
+            adapter = CatAdapter { photo ->
                 onItemClick(photo)
             }
             recyclerView.setHasFixedSize(true)

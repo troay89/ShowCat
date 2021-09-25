@@ -10,7 +10,6 @@ import javax.inject.Singleton
 
 @Singleton
 class CatRepositoryImpl @Inject constructor(private val catApiService: CatApiService): CatsRepository {
-
     override fun getResults() = Pager(
         config = PagingConfig(
             pageSize = 10,

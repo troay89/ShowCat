@@ -11,7 +11,6 @@ import javax.inject.Singleton
 
 
 class GetCatsUseCase @Inject constructor(private val carRepository: CatsRepository) {
-
     fun execute(): LiveData<PagingData<CatEntity>>{
         return carRepository.getResults()
     }

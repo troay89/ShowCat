@@ -11,38 +11,42 @@ import com.example.showcat.R
 import com.example.showcat.databinding.ItemUnsplashPhotoBinding
 import com.example.showcat.ui.model.CatUI
 
-class CatPhotoAdapter(private val onClick: (CatUI) -> Unit): PagingDataAdapter<CatUI, CatPhotoAdapter.PhotoViewHolder>(PHOTO_COMPARATOR) {
-
+class CatAdapter(private val onClick: (CatUI) -> Unit) :
+    PagingDataAdapter<CatUI, CatAdapter.PhotoViewHolder>(PHOTO_COMPARATOR) {
 
     override fun onBindViewHolder(holder: PhotoViewHolder, position: Int) {
         val currentItem = getItem(position)
 
-        if (currentItem != null){
+        if (currentItem != null) {
             holder.bind(currentItem)
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoViewHolder {
-        val binding = ItemUnsplashPhotoBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            ItemUnsplashPhotoBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return PhotoViewHolder(binding, onClick)
     }
 
-    inner class PhotoViewHolder(private val binding: ItemUnsplashPhotoBinding, onClick: (CatUI) -> Unit) :
+    inner class PhotoViewHolder(
+        private val binding: ItemUnsplashPhotoBinding,
+        onClick: (CatUI) -> Unit
+    ) :
         RecyclerView.ViewHolder(binding.root) {
 
         init {
             binding.root.setOnClickListener {
-                val  position = bindingAdapterPosition
-                if (position != RecyclerView.NO_POSITION){
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
                     val item = getItem(position)
-                    if(item != null){
+                    if (item != null) {
                         onClick(item)
                     }
                 }
             }
         }
 
-        fun bind(catUI: CatUI){
+        fun bind(catUI: CatUI) {
             binding.apply {
                 Glide.with(itemView)
                     .load(catUI.url)

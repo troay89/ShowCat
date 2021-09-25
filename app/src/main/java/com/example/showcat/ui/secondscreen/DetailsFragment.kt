@@ -57,7 +57,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
                         arrayOf(
                             Manifest.permission.WRITE_EXTERNAL_STORAGE,
                             Manifest.permission.READ_EXTERNAL_STORAGE
-                        ), 111
+                        ), REQUEST_CODE
                     )
                     saveImageToGallery(bitmap, photo)
                 }
@@ -120,12 +120,12 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
                 FileOutputStream(image)
             }
 
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos)
+            bitmap.compress(Bitmap.CompressFormat.JPEG, QUALITY, fos)
             fos?.close()
 
             Toast.makeText(context, "Картинка сохранена", Toast.LENGTH_SHORT).show()
 
-        } catch (e: Exception) {
+        } catch (e : Exception) {
             Toast.makeText(context, "Картинка не сохранена \n" + e.message, Toast.LENGTH_SHORT)
                 .show()
         }
@@ -154,5 +154,10 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
                 Toast.makeText(context, "Разрешение получено", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    companion object {
+        const val REQUEST_CODE = 111
+        const val QUALITY = 100
     }
 }

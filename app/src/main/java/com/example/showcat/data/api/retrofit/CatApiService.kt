@@ -6,7 +6,6 @@ import retrofit2.http.Headers
 import retrofit2.http.Query
 
 interface CatApiService {
-
     companion object {
         const val BASE_URL = "https://api.thecatapi.com/"
         const val CLIENT_ID = "2f448567-9493-4a86-8494-cc1bef7f193e"

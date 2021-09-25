@@ -14,6 +14,5 @@ import javax.inject.Inject
 class GalleryViewModel @Inject constructor(
     getCatsUseCase: GetCatsUseCase
 ) : ViewModel() {
-
     val photos: LiveData<PagingData<CatEntity>> = getCatsUseCase.execute().cachedIn(viewModelScope)
 }
