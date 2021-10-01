@@ -49,7 +49,7 @@ class CatAdapter(private val onClick: (CatUI) -> Unit) :
         fun bind(catUI: CatUI) {
             binding.apply {
                 Glide.with(itemView)
-                    .load(catUI.url)
+                    .load(catUI.imageUrl)
                     .centerCrop()
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .error(R.drawable.ic_baseline_person_24)

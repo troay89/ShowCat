@@ -69,7 +69,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
 
         binding.apply {
             Glide.with(this@DetailsFragment)
-                .load(photo.url)
+                .load(photo.imageUrl)
                 .error(R.drawable.ic_baseline_person_24)
                 .listener(object : RequestListener<Drawable> {
                     override fun onLoadFailed(

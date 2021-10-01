@@ -8,7 +8,7 @@ object EntityToUI: BaseMapper<CatEntity, CatUI> {
     override fun map(type: CatEntity?): CatUI {
         return CatUI(
             id = type!!.id,
-            url = type.url
+            imageUrl = type.url
         )
     }
 }

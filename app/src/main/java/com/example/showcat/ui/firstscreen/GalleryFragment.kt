@@ -7,10 +7,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
-import androidx.paging.map
 import com.example.showcat.R
 import com.example.showcat.databinding.FragmentGalleryBinding
-import com.example.showcat.ui.mapper.EntityToUI
 import com.example.showcat.ui.model.CatUI
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -53,9 +51,7 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
 
     private fun observerLiveData() {
         viewModel.photos.observe(viewLifecycleOwner) {
-            adapter.submitData(viewLifecycleOwner.lifecycle, it.map { catEntity ->
-                EntityToUI.map(catEntity)
-            })
+            adapter.submitData(viewLifecycleOwner.lifecycle, it)
         }
     }
 

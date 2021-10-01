@@ -9,13 +9,11 @@ import com.example.showcat.domain.model.CatEntity
 import retrofit2.HttpException
 import java.io.IOException
 
-private const val CAT_STARTING_PAGE_INDEX = 1
-
 class CatPagingSource(
     private val catApiService: CatApiService,
 ): PagingSource<Int, CatEntity>() {
-    override fun getRefreshKey(state: PagingState<Int, CatEntity>): Int? {
-        TODO("Not yet implemented")
+    override fun getRefreshKey(state: PagingState<Int, CatEntity>): Int {
+        return CAT_STARTING_PAGE_INDEX
     }
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, CatEntity> {
@@ -23,16 +21,18 @@ class CatPagingSource(
 
         return try {
             val photos: List<CatEntity> = ApiToEntityMapper.map(catApiService.getPhoto(params.loadSize, position))
-            Log.d("load111", photos.size.toString())
+            Log.d("CatPagingSource", photos.size.toString())
             LoadResult.Page(
                 data = photos,
                 prevKey = if(position == CAT_STARTING_PAGE_INDEX) null else position - 1,
                 nextKey = if(photos.isEmpty()) null else position + 1
             )
-        }catch (exception: IOException){
-            LoadResult.Error(exception)
-        }catch (exception: HttpException){
+        }catch (exception: Exception){
             LoadResult.Error(exception)
         }
+    }
+
+    companion object {
+        private const val CAT_STARTING_PAGE_INDEX = 1
     }
 }

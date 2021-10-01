@@ -1,6 +1,7 @@
 package com.example.showcat.data.api.retrofit
 
 import com.example.showcat.data.api.model.CatApi
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Query
@@ -17,5 +18,4 @@ interface CatApiService {
     @Query("limit") limit: Int,
     @Query("page") page: Int
     ): List<CatApi>
-
 }

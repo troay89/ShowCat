@@ -1,4 +1,4 @@
-package com.example.showcat.data.di
+package com.example.showcat.core.di
 
 import com.example.showcat.data.api.retrofit.CatApiService
 import com.example.showcat.data.repository.CatRepositoryImpl
