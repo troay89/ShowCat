@@ -2,6 +2,7 @@ package com.example.showcat.core.di
 
 import com.example.showcat.data.api.retrofit.CatApiService
 import com.example.showcat.data.repository.CatRepositoryImpl
+import com.example.showcat.data.repository.factory.CatPagingSourceFactory
 import com.example.showcat.domain.CatsRepository
 import dagger.Module
 import dagger.Provides
@@ -27,7 +28,7 @@ object AppModule {
     fun provideUnsplashApi(retrofit: Retrofit): CatApiService = retrofit.create(CatApiService::class.java)
 
     @Provides
-    fun provideDataManager (catApiService: CatApiService): CatsRepository {
-        return CatRepositoryImpl(catApiService)
+    fun provideDataManager (factory: CatPagingSourceFactory): CatsRepository {
+        return CatRepositoryImpl(factory)
     }
 }

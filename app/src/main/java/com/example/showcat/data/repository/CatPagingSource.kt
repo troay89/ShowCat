@@ -6,8 +6,6 @@ import androidx.paging.PagingState
 import com.example.showcat.data.api.retrofit.CatApiService
 import com.example.showcat.data.repository.mapper.ApiToEntityMapper
 import com.example.showcat.domain.model.CatEntity
-import retrofit2.HttpException
-import java.io.IOException
 
 class CatPagingSource(
     private val catApiService: CatApiService,
