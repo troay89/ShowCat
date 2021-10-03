@@ -51,13 +51,6 @@ android {
             isIncludeAndroidResources = true
         }
     }
-
-    configurations.all {
-        resolutionStrategy {
-            force ("androidx.test:monitor:1.4.0")
-        }
-    }
-
 }
 
 dependencies {
@@ -81,10 +74,12 @@ dependencies {
     kapt(Libraries.Hilt.hiltHiltCompiler)
 
     testImplementation(Libraries.Test.junit)
+    testImplementation(Libraries.Test.mockK)
+    testImplementation(Libraries.Test.espressoCore)
+    testImplementation(Libraries.Test.kotlinJunit)
+    testImplementation(Libraries.Test.coroutine)
+
     androidTestImplementation(Libraries.Test.androidJunit)
-    androidTestImplementation(Libraries.Test.espressoCore)
-    androidTestImplementation(Libraries.Test.mockK)
     androidTestImplementation(Libraries.Test.mockKAndroid)
     androidTestImplementation(Libraries.Test.coroutine)
-    androidTestImplementation(Libraries.Test.kotlinJunit)
 }

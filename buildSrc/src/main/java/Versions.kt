@@ -25,5 +25,5 @@ object Versions {
     const val detektV = "1.18.1"
     const val ktlintV = "10.2.0"
     const val mockkVersion = "1.12.0"
-    const val coroutineTestVersion = "1.5.1"
+    const val coroutineTestVersion = "1.4.3"
 }
