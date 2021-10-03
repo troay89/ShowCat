@@ -33,5 +33,9 @@ object Libraries {
         const val junit = "junit:junit:${Versions.junit}"
         const val androidJunit = "androidx.test.ext:junit:${Versions.androidxJunit}"
         const val espressoCore = "androidx.test.espresso:espresso-core:${Versions.espresso}"
+        const val mockK = "io.mockk:mockk:${Versions.mockkVersion}"
+        const val mockKAndroid = "io.mockk:mockk-android:${Versions.mockkVersion}"
+        const val coroutine = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.coroutineTestVersion}"
+        const val kotlinJunit = "org.jetbrains.kotlin:kotlin-test-junit:${Versions.kotlin}"
     }
 }

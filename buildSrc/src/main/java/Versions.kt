@@ -1,6 +1,6 @@
 object Versions {
     const val gradle = "7.0.2"
-    const val kotlin = "1.5.30"
+    const val kotlin = "1.5.31"
     const val kotlinter = "2.1.1"
 
     const val compileSdk = 30
@@ -24,4 +24,6 @@ object Versions {
     const val junit = "4.13.2"
     const val detektV = "1.18.1"
     const val ktlintV = "10.2.0"
+    const val mockkVersion = "1.12.0"
+    const val coroutineTestVersion = "1.5.1"
 }
