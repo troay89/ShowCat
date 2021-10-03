@@ -1,10 +1,10 @@
 package com.example.showcat.ui.firstscreen
 
-import androidx.lifecycle.*
-import androidx.paging.PagingData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import androidx.paging.map
-import com.example.showcat.domain.model.CatEntity
 import com.example.showcat.domain.usecase.GetCatsUseCase
 import com.example.showcat.ui.mapper.EntityToUI
 import dagger.hilt.android.lifecycle.HiltViewModel

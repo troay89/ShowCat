@@ -3,6 +3,7 @@ package com.example.showcat.ui.secondscreen
 import android.Manifest
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -31,8 +32,11 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
 
     private fun saveDetailedPhotos() {
         binding.savaImage.setOnClickListener {
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.Q) {
+                viewModel.saveImageToGallery(binding)
+                return@setOnClickListener
+            }
             requestWritePermissionLauncher.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-
         }
 
     }
@@ -45,9 +49,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
 
     private fun onGotWritePermissionsResult(granted: Boolean) {
         if (granted) {
-            val bitmapDrawable: BitmapDrawable = binding.imageView.drawable as BitmapDrawable
-            val bitmap: Bitmap = bitmapDrawable.bitmap
-            viewModel.saveImageToGallery(bitmap)
+            viewModel.saveImageToGallery(binding)
             Toast.makeText(context, "разрешение получено", Toast.LENGTH_LONG).show()
         } else Toast.makeText(context, "разрешение не получено", Toast.LENGTH_LONG).show()
     }

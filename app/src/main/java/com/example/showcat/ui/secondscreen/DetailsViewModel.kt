@@ -4,12 +4,14 @@ import android.app.Application
 import android.content.ContentResolver
 import android.content.ContentValues
 import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -24,6 +26,7 @@ import com.example.showcat.ui.model.CatUI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.io.File
 import java.io.FileOutputStream
+import java.io.OutputStream
 import javax.inject.Inject
 
 @HiltViewModel
@@ -32,7 +35,7 @@ class DetailsViewModel @Inject constructor(
     private val app: Application
 ): ViewModel() {
 
-    val catUI = state.get<CatUI>("photo")
+    private val catUI = state.get<CatUI>("photo")
 
     fun displayDetailedPhotos(binding: FragmentDetailsBinding) {
 
@@ -67,26 +70,15 @@ class DetailsViewModel @Inject constructor(
         }
     }
 
-    fun saveImageToGallery(bitmap: Bitmap) {
+    fun saveImageToGallery(binding: FragmentDetailsBinding) {
         try {
+            val bitmapDrawable: BitmapDrawable = binding.imageView.drawable as BitmapDrawable
+            val bitmap: Bitmap = bitmapDrawable.bitmap
             val fos = if (Build.VERSION.SDK_INT > Build.VERSION_CODES.Q) {
-                val resolver: ContentResolver = app.contentResolver
-                val contentValues = ContentValues()
-                contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, catUI?.id + ".jpg")
-                contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
-                contentValues.put(
-                    MediaStore.MediaColumns.RELATIVE_PATH,
-                    Environment.DIRECTORY_PICTURES + File.separator + "TestFolder"
-                )
-                val imageUri: Uri =
-                    resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)!!
-                resolver.openOutputStream(imageUri)
+                saveImageVersionUpQ()
+
             } else {
-                val imagesDir =
-                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-                        .toString()
-                val image = File(imagesDir, catUI?.id + ".jpg")
-                FileOutputStream(image)
+                saveImageVersionUnderQ()
             }
 
             bitmap.compress(Bitmap.CompressFormat.JPEG, DetailsFragment.QUALITY, fos)
@@ -96,6 +88,29 @@ class DetailsViewModel @Inject constructor(
         } catch (e : Exception) {
             Toast.makeText(app, "картинку не удалось сохранить", Toast.LENGTH_LONG).show()
         }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.Q)
+    private fun saveImageVersionUpQ(): OutputStream?{
+        val resolver: ContentResolver = app.contentResolver
+        val contentValues = ContentValues()
+        contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, catUI?.id + ".jpg")
+        contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
+        contentValues.put(
+            MediaStore.MediaColumns.RELATIVE_PATH,
+            Environment.DIRECTORY_PICTURES + File.separator + "TestFolder"
+        )
+        val imageUri: Uri =
+            resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)!!
+        return resolver.openOutputStream(imageUri)
+    }
+
+    private fun saveImageVersionUnderQ(): OutputStream{
+        val imagesDir =
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+                .toString()
+        val image = File(imagesDir, catUI?.id + ".jpg")
+        return FileOutputStream(image)
     }
 
 }
